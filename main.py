@@ -21,7 +21,7 @@ class Person:
     def get_name(self):
         return self.name
 
-class Network:
+class AddUser:
     def __init__(self, num_people=2):
         for _ in range(num_people):
             name = names.get_full_name()
@@ -32,14 +32,15 @@ class Network:
         users.append(p)
 
 
-class cmds():
+class Cmds():
     def help(self):
         print("Available commands:\n"
                 "'q', 'quit' -> Exit the simulation.\n"
                 "'?', 'help' -> List available commands.\n"
                 "'users' -> List users in the Social Network.\n"
                 "'add users' -> Add user(s) to the Social Network.\n"
-                "'cycle' -> Run one iteration of adding new users and friends.\n")
+                "'cycle' -> Run one iteration of adding new users and friends.\n"
+                "'friends' -> List the friends of a particular user.\n")
 
     def users(self):
         for i in users:
@@ -53,7 +54,7 @@ class cmds():
 
         for _ in range(newUsers):
             name = names.get_full_name()
-            Network.add_user(name)
+            initUsers.add_user(name)
             print("Added user {}".format(name))
 
     def print_friends(self):
@@ -75,7 +76,7 @@ class cmds():
 
         for user in users:
             if user.traits["Outgoing"] > random.randint(0,9) and user.traits["Friendly"] > random.randint(2, 8):
-                for _ in range(0, random.randint(1, len(user.friends) // 2)):
+                for _ in range(0, random.randint(0, len(user.friends) // 2)):
                     friend = users[random.randint(0, len(users)-1)]
                     if check_friend(user, friend) and friend.traits["Friendly"] > random.randint(0, 5):
                         user.friends.append(friend)
@@ -89,14 +90,16 @@ class cmds():
             #             user.friends.append(users[i])
             #             users[i].friends.append(user)
 
+
 # Initial number of people in the network
+
 initial_count = input("How many starting users?\n")
 while not initial_count.isnumeric():
     initial_count = input("'{}' not recognized. Must input a number of users (1, 2, 3, etc.)\n".format(initial_count))
 initial_count = int(initial_count)
 
-network = Network(initial_count)
-cmd = cmds()
+initUsers = AddUser(initial_count)
+cmd = Cmds()
 
 # Initialize a size of population, to be updated later
 population_size = initial_count
@@ -124,6 +127,7 @@ cmd.users()
 command = ""
 
 cmd_list = ["q", "quit","?", "help", "users", "add users", "friends", "cycle"]
+
 while command != "q" and command != "quit":
     command = input("\n>>>")
 
@@ -152,17 +156,3 @@ while command != "q" and command != "quit":
         cmd.cycle()
         population_size = len(users)
         continue
-
-
-    
-
-
-
-
-
-
-
-
-
-
-    
