@@ -22,8 +22,6 @@ class Users:
 
     def print_friends(self):
         user_id = input("Enter ID of the user to view their friend list:\n")
-
-
         while not user_id.isnumeric() or int(user_id) not in [x.id for x in self.users]:
             user_id = input("'{}' not recognized or ID not found. Must input a number of users (1, 2, 3, etc.)\n".format(user_id))
 
@@ -48,18 +46,23 @@ class Users:
             print("Added user {}".format(name))
 
     def cycle(self):
+        cycle_count = input("How many cycles?\n")
+        while not cycle_count.isnumeric():
+            cycle_count = input("'{}' not recognized. Must input a number of users (1, 2, 3, etc.)\n".format(cycle_count))
+        cycle_count = int(cycle_count)
+
         def check_friend(user, friend):
             if friend not in self.users or friend == user or friend in user.friends:
                 return False
             return True
-
-        for user in self.users:
-            if user.traits["Outgoing"] > random.randint(0,9) and user.traits["Friendly"] > random.randint(2, 8):
-                for _ in range(0, random.randint(0, len(user.friends) // 2)):
-                    friend = self.users[random.randint(0, len(self.users)-1)]
-                    if check_friend(user, friend) and friend.traits["Friendly"] > random.randint(0, 5):
-                        user.friends.append(friend)
-                        friend.friends.append(user)
+        for _ in range(cycle_count):
+            for user in self.users:
+                if user.traits["Outgoing"] > random.randint(0,9) and user.traits["Friendly"] > random.randint(2, 8):
+                    for _ in range(0, random.randint(0, len(user.friends) // 2)):
+                        friend = self.users[random.randint(0, len(self.users)-1)]
+                        if check_friend(user, friend) and friend.traits["Friendly"] > random.randint(0, 5):
+                            user.friends.append(friend)
+                            friend.friends.append(user)
             
             # IF NOT OUTGOING AND NOT FRIENDLY, OR EXTREMES OF EITHER, CHANCE TO REMOVE FRIENDS.
             # else:
@@ -68,3 +71,13 @@ class Users:
             #         if check_friend(user, users[i]) and users[i].traits["Friendly"] > random.randint(0, 5):
             #             user.friends.append(users[i])
             #             users[i].friends.append(user)
+
+    def traits(self):
+        user_id = input("Enter ID of the user to view their traits:\n")
+        while not user_id.isnumeric() or int(user_id) not in [x.id for x in self.users]:
+            user_id = input("'{}' not recognized or ID not found. Must input a number of users (1, 2, 3, etc.)\n".format(user_id))
+
+        user = self.users[int(user_id)]
+        
+        for trait in user.traits:
+            print("{}: {}".format(trait, user.traits[trait]))

@@ -36,7 +36,7 @@ allUsers.print_users()
 # Initialize with empty command
 command = ""
 
-cmd_list = ["q", "quit","?", "help", "users", "add users", "friends", "cycle"]
+cmd_list = ["q", "quit","?", "help", "users", "add users", "friends", "cycle", "traits"]
 
 # Main loop, which runs while the user continues entering commands other than 'q' and 'quit'.
 while command != "q" and command != "quit":
@@ -53,7 +53,8 @@ while command != "q" and command != "quit":
                 "'users' -> List users in the Social Network.\n"
                 "'add users' -> Add user(s) to the Social Network.\n"
                 "'cycle' -> Run one iteration of adding new users and friends.\n"
-                "'friends' -> List the friends of a particular user.\n")
+                "'friends' -> List the friends of a particular user.\n"
+                "'traits' -> List the traits of a particular user")
         continue
 
     elif command == "users":
@@ -72,4 +73,8 @@ while command != "q" and command != "quit":
     elif command == "cycle":
         allUsers.cycle()
         population_size = len(allUsers.get_users())
+        continue
+
+    elif command == "traits":
+        allUsers.traits()
         continue
