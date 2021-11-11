@@ -16,18 +16,22 @@ allUsers = Users(initial_count)
 population_size = initial_count
 
 # Set a random number of friends for each user
-for user in range(population_size):
-    numFriends = random.randint(0, population_size-1 // 3)
-    for friend in range(numFriends):
-        if len(allUsers.get_users()[user].friends) == population_size - 1:
-            continue
-        friend_id = random.randint(0, population_size-1)
-        while allUsers.get_users()[friend_id] == allUsers.get_users()[user] or allUsers.get_users()[friend_id] in allUsers.get_users()[user].friends:
-            friend_id = random.randint(0, population_size-1)
+# for user in range(population_size):
+#     numFriends = random.randint(0, ((population_size-1) // 2))
+#     print(numFriends)
+#     for friend in range(numFriends):
+#         if len(allUsers.get_users()[user].friends) == population_size - 1:
+#             continue
+#         friend_id = random.randint(0, population_size-1)
+#         while allUsers.get_users()[friend_id] == allUsers.get_users()[user] or allUsers.get_users()[friend_id] in allUsers.get_users()[user].friends:
+#             friend_id = random.randint(0, population_size-1)
 
-        if friend_id not in allUsers.get_users()[user].friends and user not in allUsers.get_users()[friend_id].friends:
-            allUsers.get_users()[user].add_friend(allUsers.get_users()[friend_id])
-            allUsers.get_users()[friend_id].add_friend(allUsers.get_users()[user])
+#         if friend_id not in allUsers.get_users()[user].friends and user not in allUsers.get_users()[friend_id].friends:
+#             allUsers.get_users()[user].add_friend(allUsers.get_users()[friend_id])
+#             allUsers.get_users()[friend_id].add_friend(allUsers.get_users()[user])
+
+
+allUsers.cycle(population_size)
 
 # Print all persons initially in the Network
 print("Initial Population:")

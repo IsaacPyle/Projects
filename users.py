@@ -4,13 +4,18 @@ from person import Person
 
 class Users:
     def __init__(self, num_people=2):
+        self.natural_friend_count = 100
+
         self.users = []
+        self.next_user_id = 0
         for _ in range(num_people):
             name = names.get_full_name()
-            self.users.append(Person(name, len(self.users)))
+            self.users.append(Person(name, self.next_user_id))
+            self.next_user_id += 1
 
     def create_initial_users(self, name):
-        p = Person(name, len(self.users))
+        p = Person(name, self.next_user_id)
+        self.next_user_id += 1
         self.users.append(p)
 
     def get_users(self):
@@ -45,20 +50,25 @@ class Users:
             self.create_initial_users(name)
             print("Added user {}".format(name))
 
-    def cycle(self):
-        cycle_count = input("How many cycles?\n")
-        while not cycle_count.isnumeric():
-            cycle_count = input("'{}' not recognized. Must input a number of users (1, 2, 3, etc.)\n".format(cycle_count))
-        cycle_count = int(cycle_count)
+    def cycle(self, count=-1):
+        if count == -1:
+            cycle_count = input("How many cycles?\n")
+            while not cycle_count.isnumeric():
+                cycle_count = input("'{}' not recognized. Must input a number of users (1, 2, 3, etc.)\n".format(cycle_count))
+            cycle_count = int(cycle_count)
+        else:
+            cycle_count = count
 
         def check_friend(user, friend):
             if friend not in self.users or friend == user or friend in user.friends:
                 return False
             return True
+
         for _ in range(cycle_count):
             for user in self.users:
                 if user.traits["Outgoing"] > random.randint(0,9) and user.traits["Friendly"] > random.randint(2, 8):
-                    for _ in range(0, random.randint(0, len(user.friends) // 2)):
+                    for _ in range(0, random.randint(0, (len(user.friends) // 2) + 1)):
+                        
                         friend = self.users[random.randint(0, len(self.users)-1)]
                         if check_friend(user, friend) and friend.traits["Friendly"] > random.randint(0, 5):
                             user.friends.append(friend)
