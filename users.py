@@ -3,6 +3,34 @@ import random
 from person import Person
 
 class Users:
+    """User base for the Social Network.
+    
+    Attributes
+    ----------
+    users: Person
+        Array of Person objects
+    natural_friend_count: Int
+        Value in which to naturally trend toward in a cycle
+    next_user_id: Int
+        Value incremented after each Person is created, to use as a unique ID
+    
+    Methods
+    ----------
+    create_initial_users(name)
+        Creates a person object, appends it to the 'users' array, and increments next_user_id
+    get_users():
+        Returns the 'users' array
+    print_users():
+        Prints the ID, Name, and length of the friends array of each user
+    print_friends():
+        Takes user input as user id, prints names of all friends in that user's friends array
+    remove_friend(user, friend):
+        Removes friend from user's friends array, and user from friend's friends array
+    cycle(count=-1):
+        If no count given, prompts user for how many times they would like to cycle, 
+        which adds / removes friends depending on user traits. If count given, does not prompt user,
+        and cycles 'count' times.
+    """
     def __init__(self, num_people=2):
         self.natural_friend_count = 100
 

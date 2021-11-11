@@ -15,27 +15,17 @@ allUsers = Users(initial_count)
 # Initialize a size of population, to be updated later
 population_size = initial_count
 
-# Set a random number of friends for each user
-# for user in range(population_size):
-#     numFriends = random.randint(0, ((population_size-1) // 2))
-#     print(numFriends)
-#     for friend in range(numFriends):
-#         if len(allUsers.get_users()[user].friends) == population_size - 1:
-#             continue
-#         friend_id = random.randint(0, population_size-1)
-#         while allUsers.get_users()[friend_id] == allUsers.get_users()[user] or allUsers.get_users()[friend_id] in allUsers.get_users()[user].friends:
-#             friend_id = random.randint(0, population_size-1)
-
-#         if friend_id not in allUsers.get_users()[user].friends and user not in allUsers.get_users()[friend_id].friends:
-#             allUsers.get_users()[user].add_friend(allUsers.get_users()[friend_id])
-#             allUsers.get_users()[friend_id].add_friend(allUsers.get_users()[user])
-
-
+# Add friendships depending on the population size
 allUsers.cycle(population_size)
 
-# Print all persons initially in the Network
-print("Initial Population:")
-allUsers.print_users()
+print("Initial Population:\n"
+      "Users: {}\n"
+      "Average number of Friends: {}\n"
+      "Type '?' or 'help' for a list of commands.\n".format(len(allUsers.users), sum(len(x) for x in allUsers.users.friends)))
+
+# Print all persons initially in the Network (COMMENTED DUE TO LARGE SIZES PRINTING TOO MUCH)
+# print("Initial Population:")
+# allUsers.print_users()
 
 # Initialize with empty command
 command = ""
